@@ -19,35 +19,6 @@ services:
     expose:
       - ${APP_PORT:-8080}
 
-  database:
-    container_name: example-database
-    image: postgres:16.1-alpine3.18
-    restart: unless-stopped
-    ports:
-      - ${DB_FORWARD_PORT:-5432}:5432
-    environment:
-      - POSTGRES_USER=${DB_USER:-"postgres"}
-      - POSTGRES_PASSWORD=${DB_PASSWORD:-"zenmonk"}
-      - POSTGRES_DB=${DB_DATABASE:-"survey_request_booking_db"}
-    volumes:
-      - postgresql-data:/var/lib/postgresql/data
-    networks:
-      - example_network
-  
-  pgadmin:
-    container_name: example-pgadmin
-    image: dpage/pgadmin4
-    restart: unless-stopped
-    ports:
-      - ${PGADMIN_FORWARD_PORT:-8888}:80
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - example_network
-
 networks:
   example_network:
     name: example-shared-network
