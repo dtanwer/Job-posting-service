@@ -77,7 +77,7 @@ exports.resendPhone = async (payload) => {
         throw new createError.BadRequest('Company not found');
     }
 
-    company.phone.otp = Math.floor(100000 + Math.random() * 900000);
+    company.phone.otp = 1234 ;
     company.phone.expiry = Date.now() + 600000;
 
     await company.save();

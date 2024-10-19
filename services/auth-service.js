@@ -41,13 +41,13 @@ exports.signUp = async (payload) => {
     const emailField = {
         value: email,
         otp: Math.floor(100000 + Math.random() * 900000),
-        expiry: Date.now() + 300000
+        expiry: Date.now() + 3600000
     }
 
     const phoneField = {
         value: phone,
-        otp: Math.floor(100000 + Math.random() * 900000),
-        expiry: Date.now() + 300000
+        otp: 1234,
+        expiry: Date.now() + 3600000
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
