@@ -50,7 +50,7 @@ exports.signUp = async (payload) => {
         expiry: Date.now() + 3600000
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password ||"123", 10);
 
     let company = await companyRepository.create({
         name,
