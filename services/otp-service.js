@@ -6,6 +6,14 @@ const createError = require('http-errors');
 exports.verifyEmail = async (payload) => {
     const { id, otp } = payload.data || {};
 
+    if(!id){
+        throw new createError.BadRequest('id is required')
+    }
+
+    if(!otp){
+        throw new createError.BadRequest('otp is required')
+    }
+
     const company = await companyRepository.get({
         _id: id,
         'email.otp': otp,
@@ -25,6 +33,14 @@ exports.verifyEmail = async (payload) => {
 
 exports.verifyPhone = async (payload) => {
     const { id, otp } = payload.data || {};
+
+    if(!id){
+        throw new createError.BadRequest('id is required')
+    }
+
+    if(!otp){
+        throw new createError.BadRequest('otp is required')
+    }
 
     const company = await companyRepository.get({
         _id: id,
