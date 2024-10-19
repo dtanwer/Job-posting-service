@@ -37,8 +37,7 @@ const companySchema = new Schema({
         required: true,
     },
     password: {
-        type: String,
-        required: true,
+        type: String
     },
 }, { timestamps: true });
 

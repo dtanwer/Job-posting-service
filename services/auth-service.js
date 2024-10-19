@@ -18,9 +18,9 @@ exports.signUp = async (payload) => {
         throw new createError.BadRequest('Phone is required');
     }
 
-    if (!password) {
-        throw new createError.BadRequest('Password is required');
-    }
+    // if (!password) {
+    //     throw new createError.BadRequest('Password is required');
+    // }
 
     let existingCompany = await companyRepository.get({
         'email.value': email
@@ -52,7 +52,7 @@ exports.signUp = async (payload) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const company = await companyRepository.create({
+    let company = await companyRepository.create({
         name,
         companyName,
         email: emailField,
@@ -71,7 +71,18 @@ exports.signUp = async (payload) => {
 
     await sendSms(phone, `Your OTP is ${phoneField.otp}`)
     delete company.password;
-    return company;
+    const secret = process.env.SECRET
+
+    const token = jwt.sign({ companyId: company._id },secret , {
+        expiresIn: '1h',
+    });
+
+    company = company.toJSON();
+    delete company.password;
+    delete company.email.otp;
+    delete company.phone.otp;
+
+    return { token, company };
 }
 
 exports.signIn = async (payload) => {
